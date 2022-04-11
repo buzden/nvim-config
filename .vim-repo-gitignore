@@ -1,0 +1,29 @@
+# This file is used as a gitignore for the repo by using the `core.excludesFile` setting
+
+# all
+/*
+# ...except for `~/vim*`
+!.vim*
+# ...except for `~/.config/nvim`
+!/.config
+/.config/*
+!.config/nvim
+# ...except for `~/.local/share/nvim`
+!/.local
+/.local/*
+!/.local/share
+/.local/share/*
+!/.local/share/nvim
+
+# Unwanted vim files
+.vim/plugged
+.viminfo
+.vim/.netrwhist
+
+# Unwanted neovim files
+.local/share/nvim/log
+.local/share/nvim/shada
+.local/share/nvim/swap
+
+# Compiled spell-checking file
+*.spl

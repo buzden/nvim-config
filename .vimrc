@@ -1,0 +1,78 @@
+set ts=2
+set expandtab
+set autoindent
+
+" Sets X11 title
+set title
+
+" Lines numbering
+set signcolumn=yes
+set number " Prints the current line number
+set relativenumber
+hi LineNr       ctermfg=239 ctermbg=233
+hi CursorLineNr ctermfg=245 ctermbg=233 cterm=bold
+hi SignColumn               ctermbg=233
+hi EndOfBuffer  ctermfg=12  ctermbg=233
+
+" Make folded section be colored like a comment.
+hi! link Folded Comment
+
+"hi Normal ctermbg=233
+
+hi Todo ctermfg=0 ctermbg=130
+
+fun WantPasteFrom()
+  set signcolumn=no
+  set nonumber
+  set norelativenumber
+endfun
+nnoremap <silent> <C-w> :call WantPasteFrom()<CR>
+
+" Highlight any trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+\%#\@<!$/
+
+" Colours of popup menus
+highlight Pmenu    ctermfg=254 ctermbg=17
+highlight PmenuSel ctermfg=254 ctermbg=4 cterm=bold
+
+" Airline statusbar
+set noshowmode " This is for when airline/lightline/powershell plugin is on
+let g:airline_powerline_fonts = 1
+
+" Tabs keys
+nnoremap <silent> <A-C-Left>  :tabprevious<CR>
+nnoremap <silent> <A-C-Right> :tabnext<CR>
+
+" Syntax highlighting
+let g:tex_flavor = 'latex'
+let g:rst_syntax_code_list = {
+  \ 'scala': ['scala'],
+  \ 'haskell': ['haskell'],
+  \ 'idris2': ['idris', 'idris2'],
+  \ 'java': ['java'],
+  \ 'xml': ['xml'],
+  \ 'html': ['html'],
+  \ 'sh': ['sh'],
+  \ 'cpp': ['cpp', 'c++'],
+  \ 'python': ['python']
+  \ }
+let g:markdown_fenced_languages = ['scala=scala', 'haskell=haskell', 'idris=idris2', 'bash=sh', 'sh=sh', '{eval-rst}=rst']
+" NOTICE! Addition `java=java` above ruins spellchecking everywhere but headings O_O
+
+" EasyAlign plugin keys
+"   start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+"   start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" This unsets the "last search pattern" register by hitting return
+nnoremap <silent> <CR> :noh<CR>
+
+" Spell-check-based work competion, press Ctrl+N or Ctrl+P to see variants
+set complete+=kspell
+
+" Config for the first-generation Idris 2 support plugin
+let g:idris_indent_if = 2
+let g:idris_indent_case = 2
+let g:idris_indent_rewrite = 0
