@@ -24,6 +24,7 @@
 .local/share/nvim/log
 .local/share/nvim/shada
 .local/share/nvim/swap
+.local/share/nvim/.netrwhist
 
 # Compiled spell-checking file
 *.spl

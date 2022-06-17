@@ -8,14 +8,14 @@ call plug#begin()
 
   """"""" IDRIS 2 SUPPORT
 
-  """ First generation
-  "Plug 'edwinb/idris2-vim'
-  " Enabled now through system-wide installation of `idris2-vim`
-
   """ Fourth generation
   Plug 'neovim/nvim-lspconfig'
   Plug 'MunifTanjim/nui.nvim'
   Plug 'ShinKage/idris2-nvim'
+
+  """ First generation (should go after the `idris2-nvim` because of issues of order)
+  "Plug 'edwinb/idris2-vim'
+  " Enabled now through system-wide installation of `idris2-vim`
 
   """""" OTHER NICE STUFF
 

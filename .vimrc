@@ -69,6 +69,9 @@ nmap ga <Plug>(EasyAlign)
 " This unsets the "last search pattern" register by hitting return
 nnoremap <silent> <CR> :noh<CR>
 
+" Disable `q` in the main mode
+nnoremap <silent> q :<CR>
+
 " Spell-check-based work competion, press Ctrl+N or Ctrl+P to see variants
 set complete+=kspell
 

@@ -29,5 +29,5 @@ hi def mystTodo ctermfg=64 "39 "93
 " Highlight (inline) code like it is done in `rst.vim`
 hi link markdownCode String
 
-" Make code delimiters not so creaming
+" Make code delimiters not so screaming
 hi markdownCodeDelimiter ctermfg=240
