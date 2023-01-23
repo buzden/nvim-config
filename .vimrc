@@ -32,6 +32,9 @@ nnoremap <silent> <C-w> :call WantPasteFrom()<CR>
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+\%#\@<!$/
 
+" Remove trailing whitespace on save
+autocmd BufWritePre * :%s/\s\+$//e
+
 " Colours of popup menus
 highlight Pmenu    ctermfg=254 ctermbg=17
 highlight PmenuSel ctermfg=254 ctermbg=4 cterm=bold
@@ -39,6 +42,7 @@ highlight PmenuSel ctermfg=254 ctermbg=4 cterm=bold
 " Airline statusbar
 set noshowmode " This is for when airline/lightline/powershell plugin is on
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 0
 
 " Tabs keys
 nnoremap <silent> <A-C-Left>  :tabprevious<CR>
@@ -50,6 +54,7 @@ let g:rst_syntax_code_list = {
   \ 'scala': ['scala'],
   \ 'haskell': ['haskell'],
   \ 'idris2': ['idris', 'idris2'],
+  \ 'tex': ['tex', 'latex'],
   \ 'java': ['java'],
   \ 'xml': ['xml'],
   \ 'html': ['html'],

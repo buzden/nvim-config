@@ -1,4 +1,4 @@
-set runtimepath^=~/.vim runtimepath+=~/.vim/after runtimepath+=/usr/share/vim/vimfiles runtimepath+=/usr/share/vim/vim82
+set runtimepath^=~/.vim runtimepath+=~/.vim/after runtimepath+=/usr/share/vim/vimfiles
 let &packpath = &runtimepath
 
 let g:mapleader='|'
@@ -20,16 +20,13 @@ call plug#begin()
   """""" OTHER NICE STUFF
 
   " Nice status bar
-  "Plug 'vim-airline/vim-airline'
-  " Enabled now through system-wide installation
+  Plug 'vim-airline/vim-airline'
 
   " Support for `.editorconfig` files
-  "Plug 'editorconfig/editorconfig-vim'
-  " Enabled now through system-wide installation
+  Plug 'editorconfig/editorconfig-vim'
 
   " Aligning utility
-  "Plug 'junegunn/vim-easy-align'
-  " Enabled now through system-wide installation
+  Plug 'junegunn/vim-easy-align'
 
   " Colorful parentheses
   Plug 'luochen1990/rainbow'
