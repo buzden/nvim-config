@@ -20,6 +20,7 @@ hi! link Folded Comment
 "hi Normal ctermbg=233
 
 hi Todo ctermfg=0 ctermbg=130
+hi Statement ctermfg=3
 
 fun WantPasteFrom()
   set signcolumn=no
@@ -47,6 +48,12 @@ let g:airline#extensions#tabline#enabled = 0
 " Tabs keys
 nnoremap <silent> <A-C-Left>  :tabprevious<CR>
 nnoremap <silent> <A-C-Right> :tabnext<CR>
+
+" Shift page without shifting the cursor
+nnoremap <silent> <S-Up> <C-y>
+vnoremap <silent> <S-Up> <C-y>
+nnoremap <silent> <S-Down> <C-e>
+vnoremap <silent> <S-Down> <C-e>
 
 " Syntax highlighting
 let g:tex_flavor = 'latex'
@@ -77,6 +84,9 @@ nnoremap <silent> <CR> :noh<CR>
 " Disable `q` in the main mode
 nnoremap <silent> q :<CR>
 
+" Disable `ZZ` in the main mode
+nnoremap <silent> ZZ :<CR>
+
 " Spell-check-based work competion, press Ctrl+N or Ctrl+P to see variants
 set complete+=kspell
 
@@ -84,3 +94,6 @@ set complete+=kspell
 let g:idris_indent_if = 2
 let g:idris_indent_case = 2
 let g:idris_indent_rewrite = 0
+
+" Center the cursor like to be in the center of the screen
+au VimEnter * normal zz

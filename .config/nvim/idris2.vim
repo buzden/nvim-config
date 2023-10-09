@@ -168,6 +168,10 @@ highlight LspSemantic_type ctermfg=33
 " Data constructors
 highlight LspSemantic_enumMember ctermfg=46
 
+" Variables
+highlight LspSemantic_variable ctermfg=245
+highlight @lsp.type.variable   ctermfg=245
+
 " Explicit namespaces
 highlight LspSemantic_namespace ctermfg=118 cterm=bold
 " Module identifiers
@@ -176,6 +180,6 @@ highlight link LspSemantic_module Identifier
 highlight LspSemantic_postulate ctermbg=52 cterm=bold
 
 " Disable infelicitous categories
-highlight LspSemantic_function NONE
-highlight LspSemantic_variable NONE
-highlight LspSemantic_keyword NONE
+highlight link LspSemantic_function NONE
+highlight link @lsp.type.function   NONE
+highlight link LspSemantic_keyword  NONE

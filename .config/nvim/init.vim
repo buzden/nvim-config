@@ -49,7 +49,15 @@ let g:rainbow_conf = {
 \ 'ctermfgs': [7, 226, 200, 46, 32],
 \	'separately': {
 \		'idris2': {
-\			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold'],
+\			'parentheses':
+\       [ 'start=/(/   end=/)/   fold'
+\       , 'start=/\[/  end=/\]/  fold'
+\       , 'start=/\[|/ end=/|\]/ fold'
+\       , 'start=/`(/  end=/)/   fold'
+\       , 'start=/`{/  end=/}/   fold'
+\       , 'start=/`\[/ end=/\]/  fold'
+\       , 'start=/\~(/ end=/)/   fold'
+\       ],
 \		}
 \	}
 \}
