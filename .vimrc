@@ -72,6 +72,9 @@ let g:rst_syntax_code_list = {
 let g:markdown_fenced_languages = ['scala=scala', 'haskell=haskell', 'idris=idris2', 'bash=sh', 'sh=sh', '{eval-rst}=rst']
 " NOTICE! Addition `java=java` above ruins spellchecking everywhere but headings O_O
 
+" Spell checking
+set spelllang=ru,en
+
 " EasyAlign plugin keys
 "   start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -97,3 +100,6 @@ let g:idris_indent_rewrite = 0
 
 " Center the cursor like to be in the center of the screen
 au VimEnter * normal zz
+
+" Be able to use russian keys in a command mode
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz,Ж;:
