@@ -55,7 +55,10 @@ local opts = {
 
   -- Options passed to lspconfig idris2 configuration
   server = {
-    on_attach = custom_on_attach
+    on_attach = custom_on_attach,
+    init_options = {
+      logSeverity = "ERROR"
+    }
   },
 
   -- Function to execute after a code action is performed
