@@ -77,3 +77,19 @@ let NERDTreeQuitOnOpen=3
 
 " Ctrl-t toggles the Nerd tree (with root being a dir of current file)
 nnoremap <silent> <C-t> :NERDTreeToggle %<CR>
+
+" Show column if it exceeds set text width (incl. set from `.editorconfig`)
+" Idea taken from https://superuser.com/a/1289220, but raised to a newer level ;-)
+set colorcolumn=""
+highlight ColorColumn ctermbg=darkgrey
+autocmd BufRead,TextChanged,TextChangedI * call ShowColumnIfLineIsTooLong()
+function! ShowColumnIfLineIsTooLong()
+  if &textwidth > 0
+    let maxLineLength = max(map(getline(1,'$'), 'len(v:val)'))
+    if maxLineLength > &textwidth
+      execute "set colorcolumn=" . (&textwidth + 1)
+    else
+      set colorcolumn=""
+    endif
+  endif
+endfunction
