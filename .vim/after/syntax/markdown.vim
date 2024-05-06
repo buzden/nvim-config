@@ -9,6 +9,9 @@ syn region hiddenIdris matchgroup=markdownCodeDelimiter start="^::: *idris$" end
 " Highlight inline Idris of Pandoc's Markdown
 "syn region hiddenIdris matchgroup=markdownCodeDelimiter start="`" end="`{.idris}" keepend contains=@markdownHighlight_idris2
 
+"" Highlight LaTeX code block
+"syn region injectedLaTeX matchgroup=markdownCodeDelimiter start="^::::* *{\=latex}$" end="^::::*$" keepend contains=@markdownHighlight_tex
+
 """ Stuff specific for MyST dialect
 
 syn match mystRole "{[^}]*}`[^`]*`"

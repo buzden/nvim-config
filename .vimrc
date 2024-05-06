@@ -69,7 +69,7 @@ let g:rst_syntax_code_list = {
   \ 'cpp': ['cpp', 'c++'],
   \ 'python': ['python']
   \ }
-let g:markdown_fenced_languages = ['scala=scala', 'haskell=haskell', 'idris=idris2', 'bash=sh', 'sh=sh', '{eval-rst}=rst']
+let g:markdown_fenced_languages = ['scala=scala', 'haskell=haskell', 'idris=idris2', 'bash=sh', 'sh=sh', '{eval-rst}=rst', 'tex=tex']
 " NOTICE! Addition `java=java` above ruins spellchecking everywhere but headings O_O
 
 " Spell checking
