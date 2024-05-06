@@ -36,6 +36,9 @@ local function custom_on_attach(client)
   vim.cmd [[ nnoremap <silent> <LocalLeader>x <Cmd>lua vim.diagnostic.goto_next()<CR> ]]
   vim.cmd [[ nnoremap <silent> <LocalLeader>z <Cmd>lua vim.diagnostic.goto_prev()<CR> ]]
 
+  vim.cmd [[ nnoremap <silent> <C-o> <C-o><Cmd>LspRestart<CR> ]]
+  vim.cmd [[ nnoremap <silent> <C-i> <C-i><Cmd>LspRestart<CR> ]]
+
 end
 
 local function save_hook(action)
@@ -151,6 +154,7 @@ function! IdrisCaseSplit()
   endif
 endfunction
 
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>R <CMD>LspRestart<CR>
 autocmd FileType idris2 :nnoremap <silent> <LocalLeader>r <CMD>call IdrisReload()<CR>
 autocmd FileType idris2 :nnoremap <silent> <LocalLeader>o <CMD>call IdrisTrivialProofSearch()<CR>
 autocmd FileType idris2 :nnoremap <silent> <LocalLeader>t <CMD>call IdrisShowType()<CR>
