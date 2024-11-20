@@ -58,6 +58,14 @@ call plug#begin()
 
 call plug#end()
 
+""""""""""""""""""""""""""""""""""""
+""" Configuring clipboard behaviour
+"""
+""""""""""""""""""""""""""""""""""""
+
+" Sets yanking to go to the primary selection
+set clipboard=unnamed
+
 """""""""""""""""""""""
 """ Configuring Idris2
 """
