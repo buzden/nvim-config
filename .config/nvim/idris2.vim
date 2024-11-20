@@ -7,17 +7,17 @@ lua << EOF
 
 local function custom_on_attach(client)
 
-  vim.cmd [[ nnoremap <silent> <LocalLeader>j <Cmd>lua vim.lsp.buf.definition()<CR> ]]
+  vim.cmd [[ nnoremap <silent> <LocalLeader>j <Cmd>echo "Jumping to the definition..."<CR><Cmd>lua vim.lsp.buf.definition()<CR> ]]
 
   vim.cmd [[ nnoremap <silent> <CR>           <Cmd>noh<CR><Cmd>lua require('idris2.hover').close_split()<CR> ]]
   vim.cmd [[ nnoremap <silent> <LocalLeader>t <Cmd>lua require('idris2.hover').open_split(); vim.lsp.buf.hover()<CR> ]]
   vim.cmd [[ nnoremap <silent> <LocalLeader>y <Cmd>lua require('idris2.hover').close_split(); vim.lsp.buf.hover()<CR> ]]
   vim.cmd [[ nnoremap <silent> <LocalLeader>h <Cmd>lua vim.lsp.buf.signature_help()<CR> ]]
 
-  vim.cmd [[ nnoremap <silent> <LocalLeader>i <Cmd>lua require('idris2').show_implicits()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>I <Cmd>lua require('idris2').hide_implicits()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>n <Cmd>lua require('idris2').full_namespace()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>N <Cmd>lua require('idris2').hide_namespace()<CR> ]]
+  vim.cmd [[ nnoremap <silent> <LocalLeader>i <Cmd>echo "Show imlicits: on"<CR><Cmd>lua require('idris2').show_implicits()<CR> ]]
+  vim.cmd [[ nnoremap <silent> <LocalLeader>I <Cmd>echo "Show imlicits: off"<CR><Cmd>lua require('idris2').hide_implicits()<CR> ]]
+  vim.cmd [[ nnoremap <silent> <LocalLeader>n <Cmd>echo "Namespaces: show full"<CR><Cmd>lua require('idris2').full_namespace()<CR> ]]
+  vim.cmd [[ nnoremap <silent> <LocalLeader>N <Cmd>echo "Namespaces: hide"<CR><Cmd>lua require('idris2').hide_namespace()<CR> ]]
 
   vim.cmd [[ nnoremap <silent> <LocalLeader>c  <Cmd>lua require('idris2.code_action').case_split()<CR> ]]
   vim.cmd [[ nnoremap <silent> <LocalLeader>mc <Cmd>lua require('idris2.code_action').make_case()<CR> ]]
@@ -36,8 +36,8 @@ local function custom_on_attach(client)
   vim.cmd [[ nnoremap <silent> <LocalLeader>x <Cmd>lua vim.diagnostic.goto_next()<CR> ]]
   vim.cmd [[ nnoremap <silent> <LocalLeader>z <Cmd>lua vim.diagnostic.goto_prev()<CR> ]]
 
-  vim.cmd [[ nnoremap <silent> <C-o> <C-o><Cmd>LspRestart<CR> ]]
-  vim.cmd [[ nnoremap <silent> <C-i> <C-i><Cmd>LspRestart<CR> ]]
+  vim.cmd [[ nnoremap <silent> <C-o> <C-o><Cmd>echo "Restarting LSP..."<CR><Cmd>cd %:p:h<CR><Cmd>LspRestart<CR> ]]
+  vim.cmd [[ nnoremap <silent> <C-i> <C-i><Cmd>echo "Restarting LSP..."<CR><Cmd>cd %:p:h<CR><Cmd>LspRestart<CR> ]]
 
 end
 
@@ -154,16 +154,13 @@ function! IdrisCaseSplit()
   endif
 endfunction
 
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>R <CMD>LspRestart<CR>
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>r <CMD>call IdrisReload()<CR>
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>o <CMD>call IdrisTrivialProofSearch()<CR>
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>t <CMD>call IdrisShowType()<CR>
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>T <CMD>call IdrisShowType()<CR>
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>c <CMD>call IdrisCaseSplit()<CR>
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>C <CMD>call IdrisCaseSplit()<CR>
-
-" Set the current directory to be one of the open file
-autocmd FileType idris2 :cd %:p:h
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>R <Cmd>cd %:p:h<CR><Cmd>echo "Restarting LSP..."<CR><CMD>LspRestart<CR>
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>r <Cmd>cd %:p:h<CR><Cmd>echo "Reloading Idris file..."<CR><CMD>call IdrisReload()<CR>
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>o <Cmd>cd %:p:h<CR><CMD>call IdrisTrivialProofSearch()<CR>
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>t <Cmd>cd %:p:h<CR><CMD>call IdrisShowType()<CR>
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>T <Cmd>cd %:p:h<CR><CMD>call IdrisShowType()<CR>
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>c <Cmd>cd %:p:h<CR><CMD>call IdrisCaseSplit()<CR>
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>C <Cmd>cd %:p:h<CR><CMD>call IdrisCaseSplit()<CR>
 
 """"""""""""""""""""""""""""""
 " Colors for semantic values "
@@ -190,3 +187,5 @@ highlight LspSemantic_postulate ctermbg=52 cterm=bold
 highlight link LspSemantic_function NONE
 highlight link @lsp.type.function   NONE
 highlight link LspSemantic_keyword  NONE
+
+" vim: textwidth=152

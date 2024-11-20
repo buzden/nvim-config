@@ -1,70 +1,72 @@
-Buzdalov
-Idris
-:idris:
-Martin-Löf
-intuitionistic
+ACM SIGPLAN
 ADT
 ADTs
-GADT
-GADTs
-typeclass
-typeclasses
-coproduct
-coproducts
-subgenerator
-subgenerators
-semigroup
-semigroups
-datatype
-typeclasses
+Arduino
+Atkey
+Bruijn
+Buzdalov
+Cas van der Rest
+Claessen
+Clojure
+Conor
+Coq
 DepTyCheck
 DepTyCheck's
+GADT
+GADTs
+ICFP
+Idris
+Koen Claessen
+Kotlin
+Martin-Löf
+Michal Palka
+OCaml
+PBT
+Palka
+Prolog
+QTT
 QuickCheck
 QuickCheck's
-metaprogramming
-inline
-datatypes
-QTT
-plugins
-metaprogram
-semiring
-typechecker
+QuickChick
 SUT
-PBT
-contravariant
-higher-kinded
-Arduino
-whitespace
-multiline
-desugared
-Atkey
-Conor
-expressivity
-haskell
-Wouter
-Swierstra
-van der
-Claessen
-Palka
+Sergey Bronnikov
 Smallbone
 Svensson
-Michal Palka
-Cas van der Rest
-unrepresentable
+TypeScript
+Wouter Swierstra
 codomain
-Sergey Bronnikov
-unicode::
-role:: idris(code)
-:language: idris
-typecheckers
-Koen Claessen
-ICFP
-ACM SIGPLAN
 codomains
-typecheck
-thirdparties
-monoid
-typechecks
-emittings
+contravariant
+coproduct
+coproducts
+datatype
+datatypes
+desugared
 effectful
+emittings
+expressivity
+haskell
+higher-kinded
+inline
+intuitionistic
+metaprogram
+metaprogramming
+monoid
+multiline
+plugins
+semigroup
+semigroups
+semiring
+subgenerator
+subgenerators
+thirdparties
+typecheck
+typechecker
+typecheckers
 typechecking
+typechecks
+typeclass
+typeclasses
+unrepresentable
+van der
+whitespace

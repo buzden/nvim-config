@@ -9,6 +9,14 @@ syn region hiddenIdris matchgroup=markdownCodeDelimiter start="^::: *idris$" end
 " Highlight inline Idris of Pandoc's Markdown
 syn region inlineIdris matchgroup=markdownCodeDelimiter start="`" end="`{.idris}" oneline keepend contains=@markdownHighlight_idris2
 
+""" LaTeX-specific stuff
+
+" Highlight inline LaTeX of Pandoc's Markdown
+syn region inlineLaTeX matchgroup=markdownCodeDelimiter start="`" end="`{=latex}" oneline keepend contains=@markdownHighlight_tex
+
+" Highlight LaTeX-code-inside-Markdown
+syn region inlineLaTeXCmd start="\\[a-zA-Z0-9]*" end="$" oneline contains=@markdownHighlight_tex
+
 "" Highlight LaTeX code block
 "syn region injectedLaTeX matchgroup=markdownCodeDelimiter start="^::::* *{\=latex}$" end="^::::*$" keepend contains=@markdownHighlight_tex
 

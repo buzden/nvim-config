@@ -1,12 +1,25 @@
+"""""""""""""""""""""""""""""""""""""""""
+""" Taking common configuration with Vim
+"""
+"""""""""""""""""""""""""""""""""""""""""
+
 set runtimepath^=~/.vim runtimepath+=~/.vim/after runtimepath+=/usr/share/vim/vimfiles
 let &packpath = &runtimepath
 
-let g:mapleader='|'
-let maplocalleader = "\\"
+source ~/.vimrc
+
+" For compat between 0.9.* and 0.10.*. This can be removed as soon as we use NeoVim 0.10.*
+lua vim.uv = vim.uv or vim.loop
+
+"""""""""""""""""""""""
+""" Turning on plugins
+"""
+"""""""""""""""""""""""
 
 call plug#begin()
 
-  """"""" IDRIS 2 SUPPORT
+  """ IDRIS 2 SUPPORT
+  """
 
   """ Fourth generation
   Plug 'neovim/nvim-lspconfig'
@@ -17,7 +30,8 @@ call plug#begin()
   "Plug 'edwinb/idris2-vim'
   " Enabled now through system-wide installation of `idris2-vim`
 
-  """""" OTHER NICE STUFF
+  """ OTHER NICE STUFF
+  """
 
   " Nice status bar
   Plug 'vim-airline/vim-airline'
@@ -38,12 +52,26 @@ call plug#begin()
   " Nice directory tree view
   Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 
+  " Support for typst
+  Plug 'kaarmu/typst.vim'
+  Plug 'chomosuke/typst-preview.nvim', {'tag': 'v1.*'}
+
 call plug#end()
 
-source ~/.vimrc
+"""""""""""""""""""""""
+""" Configuring Idris2
+"""
+"""""""""""""""""""""""
+
+let g:mapleader='|'
+let maplocalleader = "\\"
+
 source $HOME/.config/nvim/idris2.vim
 
+""""""""""""""""""""""""""""""""""""""""
 """ Rainbow (parentheses) configuration
+"""
+""""""""""""""""""""""""""""""""""""""""
 
 let g:rainbow_conf = {
 \ 'ctermfgs': [7, 226, 200, 46, 32],
@@ -62,7 +90,10 @@ let g:rainbow_conf = {
 \	}
 \}
 
+""""""""""""""""""""""""""""
 """ Nerd tree configuration
+"""
+""""""""""""""""""""""""""""
 
 " Exit Vim if NERDTree is the only window left.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
@@ -82,10 +113,10 @@ nnoremap <silent> <C-t> :NERDTreeToggle %<CR>
 " Idea taken from https://superuser.com/a/1289220, but raised to a newer level ;-)
 set colorcolumn=""
 highlight ColorColumn ctermbg=darkgrey
-autocmd BufRead,TextChanged,TextChangedI * call ShowColumnIfLineIsTooLong()
+autocmd ModeChanged,CursorHold,CursorHoldI * call ShowColumnIfLineIsTooLong()
 function! ShowColumnIfLineIsTooLong()
   if &textwidth > 0
-    let maxLineLength = max(map(getline(1,'$'), 'len(v:val)'))
+    let maxLineLength = max(map(getline(1,'$'), 'strchars(v:val)'))
     if maxLineLength > &textwidth
       execute "set colorcolumn=" . (&textwidth + 1)
     else
@@ -93,3 +124,6 @@ function! ShowColumnIfLineIsTooLong()
     endif
   endif
 endfunction
+set updatetime=1500 " To make `CursorHold` above work after 1.5 s of hold
+
+" vim: textwidth=152

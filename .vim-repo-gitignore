@@ -25,6 +25,7 @@
 .local/share/nvim/shada
 .local/share/nvim/swap
 .local/share/nvim/.netrwhist
+.local/share/nvim/typst-preview/
 
 # Compiled spell-checking file
 *.spl
