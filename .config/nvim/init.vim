@@ -55,8 +55,24 @@ call plug#begin()
   " Support for typst
   Plug 'kaarmu/typst.vim'
   Plug 'chomosuke/typst-preview.nvim', {'tag': 'v1.*'}
+  "Plug 'Myriad-Dreamin/tinymist', {'rtp': 'editors/neovim'}
+
+  " Support for showing text with ANSI escape codes
+  Plug 'powerman/vim-plugin-AnsiEsc'
 
 call plug#end()
+
+""""""""""""""""""""""""
+""" Configuring airline
+"""
+""""""""""""""""""""""""
+
+" Airline statusbar
+set noshowmode " This is for when airline/lightline/powershell plugin is on
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 0
+" big number in comparison below goes from additional buffers line from idris2-lsp, nerd and typst-buf
+autocmd BufEnter * silent! let g:airline#extensions#tabline#enabled = bufnr('$') >= 4 ? 1 : 0
 
 """"""""""""""""""""""""""""""""""""
 """ Configuring clipboard behaviour
@@ -65,6 +81,12 @@ call plug#end()
 
 " Sets yanking to go to the primary selection
 set clipboard=unnamed
+
+" Set "usual" combinations to the main clipboard (i.e., unnamedplus)
+vmap <C-c> "+yi
+vmap <C-x> "+c
+vmap <C-v> c<ESC>"+p
+imap <C-v> <ESC>"+pa
 
 """""""""""""""""""""""
 """ Configuring Idris2
@@ -75,6 +97,23 @@ let g:mapleader='|'
 let maplocalleader = "\\"
 
 source $HOME/.config/nvim/idris2.vim
+
+""""""""""""""""""""""
+""" Configuring typst
+"""
+""""""""""""""""""""""
+
+" Preview
+lua require 'typst-preview'.setup { open_cmd = 'firefox-bin --new-instance %s -P typst-preview --kiosk' }
+nnoremap <silent> <C-p> :TypstPreview slide<CR>
+nnoremap <silent> <C-A-p> :TypstPreview document<CR>
+nnoremap <silent> <C-S-p> :TypstPreviewStop<CR>
+
+" Make on save
+lua require('typst-buf').setup()
+normal zz
+autocmd BufReadPost,BufWritePost *.typ lua require('typst-buf').run()
+autocmd BufCreate *.typ nnoremap <silent> <CR> <Cmd>noh<CR><Cmd>lua require('typst-buf').hide()<CR>
 
 """"""""""""""""""""""""""""""""""""""""
 """ Rainbow (parentheses) configuration

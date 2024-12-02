@@ -45,12 +45,6 @@ highlight Pmenu    ctermfg=254 ctermbg=17
 highlight PmenuSel ctermfg=254 ctermbg=4 cterm=bold
 highlight DiagnosticError ctermfg=magenta cterm=bold
 
-" Airline statusbar
-set noshowmode " This is for when airline/lightline/powershell plugin is on
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 0
-autocmd BufEnter * silent! let g:airline#extensions#tabline#enabled = bufnr('$') >= 3 ? 1 : 0
-
 " Tabs keys
 nnoremap <silent> <A-C-Right> :bnext<CR>
 nnoremap <silent> <A-C-Left>  :bNext<CR>
@@ -81,6 +75,7 @@ let g:rst_syntax_code_list = {
 let g:markdown_fenced_languages = ['scala=scala', 'haskell=haskell', 'idris=idris2', 'bash=sh', 'sh=sh', '{eval-rst}=rst', 'tex=tex', 'c=c']
 " NOTICE! Addition `java=java` above ruins spellchecking everywhere but headings O_O
 let g:typst_embedded_languages = ['idris -> idris2', 'c', 'rust', 'rs -> rust', 'sh', 'haskell', 'hs -> haskell', 'scala']
+let g:typst_pdf_viewer = 'mupdf'
 
 " Spell checking
 set spelllang=ru,en
