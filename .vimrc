@@ -80,12 +80,6 @@ let g:typst_pdf_viewer = 'mupdf'
 " Spell checking
 set spelllang=ru,en
 
-" EasyAlign plugin keys
-"   start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-"   start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
 " This unsets the "last search pattern" register by hitting return
 nnoremap <silent> <CR> :noh<CR>
 

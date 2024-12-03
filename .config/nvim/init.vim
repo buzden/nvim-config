@@ -11,6 +11,8 @@ source ~/.vimrc
 " For compat between 0.9.* and 0.10.*. This can be removed as soon as we use NeoVim 0.10.*
 lua vim.uv = vim.uv or vim.loop
 
+set updatetime=1500 " To make `CursorHold` above work after 1.5 s of hold
+
 """""""""""""""""""""""
 """ Turning on plugins
 """
@@ -44,7 +46,6 @@ call plug#begin()
 
   " Colorful parentheses
   Plug 'luochen1990/rainbow'
-  let g:rainbow_active = 1
 
   " Comment out code using `gc`
   Plug 'tpope/vim-commentary'
@@ -85,6 +86,16 @@ vmap <C-x> "+c
 vmap <C-v> c<ESC>"+p
 imap <C-v> <ESC>"+pa
 
+""""""""""""""""""""""""""
+""" Configuring EasyAlign
+"""
+""""""""""""""""""""""""""
+
+" start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
 """""""""""""""""""""""
 """ Configuring Idris2
 """
@@ -108,9 +119,8 @@ nnoremap <silent> <C-S-p> :TypstPreviewStop<CR>
 
 " Make on open and edit
 lua require('typst-buf').setup()
-normal zz
 "autocmd BufReadPost,BufWritePost *.typ lua require('typst-buf').check(true)
-autocmd CursorHoldI,CursorHold   *.typ lua require('typst-buf').check(false)
+autocmd CursorHoldI,CursorHold *.typ lua require('typst-buf').check(false)
 autocmd BufCreate *.typ nnoremap <silent> <CR> <Cmd>noh<CR><Cmd>lua require('typst-buf').hide()<CR>
 
 """"""""""""""""""""""""""""""""""""""""
@@ -118,6 +128,7 @@ autocmd BufCreate *.typ nnoremap <silent> <CR> <Cmd>noh<CR><Cmd>lua require('typ
 """
 """"""""""""""""""""""""""""""""""""""""
 
+let g:rainbow_active = 1
 let g:rainbow_conf = {
 \ 'ctermfgs': [7, 226, 200, 46, 32],
 \	'separately': {
@@ -154,6 +165,11 @@ let NERDTreeQuitOnOpen=3
 " Ctrl-t toggles the Nerd tree (with root being a dir of current file)
 nnoremap <silent> <C-t> :NERDTreeToggle %<CR>
 
+"""""""""""""""""""""""""""""""""""
+""" Line for exceeding line length
+"""
+"""""""""""""""""""""""""""""""""""
+
 " Show column if it exceeds set text width (incl. set from `.editorconfig`)
 " Idea taken from https://superuser.com/a/1289220, but raised to a newer level ;-)
 set colorcolumn=""
@@ -169,6 +185,5 @@ function! ShowColumnIfLineIsTooLong()
     endif
   endif
 endfunction
-set updatetime=1500 " To make `CursorHold` above work after 1.5 s of hold
 
 " vim: textwidth=152
