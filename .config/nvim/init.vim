@@ -112,7 +112,7 @@ nnoremap <silent> <C-S-p> :TypstPreviewStop<CR>
 " Make on save
 lua require('typst-buf').setup()
 normal zz
-autocmd BufReadPost,BufWritePost *.typ lua require('typst-buf').run()
+autocmd BufReadPost,BufWritePost *.typ lua require('typst-buf').check()
 autocmd BufCreate *.typ nnoremap <silent> <CR> <Cmd>noh<CR><Cmd>lua require('typst-buf').hide()<CR>
 
 """"""""""""""""""""""""""""""""""""""""

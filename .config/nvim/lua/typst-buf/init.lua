@@ -45,13 +45,14 @@ function M.hide()
   M.res_buff:hide()
 end
 
-function M.run()
+function M.check()
   local fn = vim.fn.shellescape(vim.api.nvim_buf_get_name(0))
   local tc = vim.fn.system(string.format("%s --color=always compile --format=pdf %s /dev/null", vim.g.typst_cmd, fn))
 
+  M.res_buff:hide()
   if tc == "" then
     vim.cmd [[
-      lua require('typst-buf').hide()
+      call feedkeys(':', 'nx') " For clearing previous messages
       echohl DiagnosticOk
       echo "Successfully compiled PDF"
       echohl None
@@ -64,7 +65,6 @@ function M.run()
     table.insert(lines, 1, '')
     table.insert(lines, '')
 
-    M.res_buff:hide()
     M.res_buff:show()
     vim.api.nvim_buf_set_option(M.res_buff.bufnr, 'modifiable', true)
     vim.api.nvim_buf_set_lines(M.res_buff.bufnr, 0, -1, false, lines)
