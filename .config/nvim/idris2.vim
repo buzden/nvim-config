@@ -7,42 +7,44 @@ lua << EOF
 
 local function custom_on_attach(client)
 
-  vim.cmd [[ nnoremap <silent> <LocalLeader>j <Cmd>echo "Jumping to the definition..."<CR><Cmd>lua vim.lsp.buf.definition()<CR> ]]
+  vim.cmd [[
+    nnoremap <silent> <LocalLeader>j <Cmd>echo "Jumping to the definition..."<CR><Cmd>lua vim.lsp.buf.definition()<CR>
 
-  vim.cmd [[ nnoremap <silent> <CR>           <Cmd>noh<CR><Cmd>lua require('idris2.hover').close_split()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>t <Cmd>lua require('idris2.hover').open_split(); vim.lsp.buf.hover()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>y <Cmd>lua require('idris2.hover').close_split(); vim.lsp.buf.hover()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>h <Cmd>lua vim.lsp.buf.signature_help()<CR> ]]
+    nnoremap <silent> <CR>           <Cmd>noh<CR><Cmd>lua require('idris2.hover').close_split()<CR>
+    nnoremap <silent> <LocalLeader>t <Cmd>lua require('idris2.hover').open_split(); vim.lsp.buf.hover()<CR>
+    nnoremap <silent> <LocalLeader>y <Cmd>lua require('idris2.hover').close_split(); vim.lsp.buf.hover()<CR>
+    nnoremap <silent> <LocalLeader>h <Cmd>lua vim.lsp.buf.signature_help()<CR>
 
-  vim.cmd [[ nnoremap <silent> <LocalLeader>i <Cmd>echo "Show imlicits: on"<CR><Cmd>lua require('idris2').show_implicits()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>I <Cmd>echo "Show imlicits: off"<CR><Cmd>lua require('idris2').hide_implicits()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>n <Cmd>echo "Namespaces: show full"<CR><Cmd>lua require('idris2').full_namespace()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>N <Cmd>echo "Namespaces: hide"<CR><Cmd>lua require('idris2').hide_namespace()<CR> ]]
+    nnoremap <silent> <LocalLeader>i <Cmd>echo "Show imlicits: on"<CR><Cmd>lua require('idris2').show_implicits()<CR>
+    nnoremap <silent> <LocalLeader>I <Cmd>echo "Show imlicits: off"<CR><Cmd>lua require('idris2').hide_implicits()<CR>
+    nnoremap <silent> <LocalLeader>n <Cmd>echo "Namespaces: show full"<CR><Cmd>lua require('idris2').full_namespace()<CR>
+    nnoremap <silent> <LocalLeader>N <Cmd>echo "Namespaces: hide"<CR><Cmd>lua require('idris2').hide_namespace()<CR>
 
-  vim.cmd [[ nnoremap <silent> <LocalLeader>c  <Cmd>lua require('idris2.code_action').case_split()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>mc <Cmd>lua require('idris2.code_action').make_case()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>mw <Cmd>lua require('idris2.code_action').make_with()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>l  <Cmd>lua require('idris2.code_action').make_lemma()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>d  <Cmd>lua require('idris2.code_action').add_clause()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>g  <Cmd>lua require('idris2.code_action').generate_def()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>p  <Cmd>lua require('idris2.code_action').refine_hole()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>P  <Cmd>lua require('idris2.code_action').expr_search()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>O  <Cmd>lua require('idris2.code_action').intro()<CR> ]]
+    nnoremap <silent> <LocalLeader>c  <Cmd>lua require('idris2.code_action').case_split()<CR>
+    nnoremap <silent> <LocalLeader>mc <Cmd>lua require('idris2.code_action').make_case()<CR>
+    nnoremap <silent> <LocalLeader>mw <Cmd>lua require('idris2.code_action').make_with()<CR>
+    nnoremap <silent> <LocalLeader>l  <Cmd>lua require('idris2.code_action').make_lemma()<CR>
+    nnoremap <silent> <LocalLeader>d  <Cmd>lua require('idris2.code_action').add_clause()<CR>
+    nnoremap <silent> <LocalLeader>g  <Cmd>lua require('idris2.code_action').generate_def()<CR>
+    nnoremap <silent> <LocalLeader>p  <Cmd>lua require('idris2.code_action').refine_hole()<CR>
+    nnoremap <silent> <LocalLeader>P  <Cmd>lua require('idris2.code_action').expr_search()<CR>
+    nnoremap <silent> <LocalLeader>O  <Cmd>lua require('idris2.code_action').intro()<CR>
 
-  vim.cmd [[ nnoremap <silent> <LocalLeader><Tab> <Cmd>lua require('idris2.browse').browse()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>e <Cmd>lua require('idris2.repl').evaluate()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>v <Cmd>lua require('idris2.metavars').request_all()<CR> ]]
+    nnoremap <silent> <LocalLeader><Tab> <Cmd>lua require('idris2.browse').browse()<CR>
+    nnoremap <silent> <LocalLeader>e <Cmd>lua require('idris2.repl').evaluate()<CR>
+    nnoremap <silent> <LocalLeader>v <Cmd>lua require('idris2.metavars').request_all()<CR>
 
-  vim.cmd [[ nnoremap <silent> <LocalLeader>x <Cmd>lua vim.diagnostic.goto_next()<CR> ]]
-  vim.cmd [[ nnoremap <silent> <LocalLeader>z <Cmd>lua vim.diagnostic.goto_prev()<CR> ]]
+    nnoremap <silent> <LocalLeader>x <Cmd>lua vim.diagnostic.goto_next()<CR>
+    nnoremap <silent> <LocalLeader>z <Cmd>lua vim.diagnostic.goto_prev()<CR>
 
-  vim.cmd [[ nnoremap <silent> <C-o> <C-o><Cmd>echo "Restarting LSP..."<CR><Cmd>cd %:p:h<CR><Cmd>LspRestart<CR> ]]
-  vim.cmd [[ nnoremap <silent> <C-i> <C-i><Cmd>echo "Restarting LSP..."<CR><Cmd>cd %:p:h<CR><Cmd>LspRestart<CR> ]]
+    nnoremap <silent> <C-o> <C-o><Cmd>echo "Restarting LSP..."<CR><Cmd>cd %:p:h<CR><Cmd>LspRestart<CR>
+    nnoremap <silent> <C-i> <C-i><Cmd>echo "Restarting LSP..."<CR><Cmd>cd %:p:h<CR><Cmd>LspRestart<CR>
+  ]]
 
 end
 
 local function save_hook(action)
-  vim.cmd('silent write')
+  vim.cmd [[ silent write ]]
 end
 
 local opts = {
@@ -161,6 +163,10 @@ autocmd FileType idris2 :nnoremap <silent> <LocalLeader>t <Cmd>cd %:p:h<CR><CMD>
 autocmd FileType idris2 :nnoremap <silent> <LocalLeader>T <Cmd>cd %:p:h<CR><CMD>call IdrisShowType()<CR>
 autocmd FileType idris2 :nnoremap <silent> <LocalLeader>c <Cmd>cd %:p:h<CR><CMD>call IdrisCaseSplit()<CR>
 autocmd FileType idris2 :nnoremap <silent> <LocalLeader>C <Cmd>cd %:p:h<CR><CMD>call IdrisCaseSplit()<CR>
+
+let g:idris_indent_if = 2
+let g:idris_indent_case = 2
+let g:idris_indent_rewrite = 0
 
 """"""""""""""""""""""""""""""
 " Colors for semantic values "

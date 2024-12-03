@@ -92,11 +92,6 @@ nnoremap <silent> ZZ :<CR>
 " Spell-check-based work competion, press Ctrl+N or Ctrl+P to see variants
 set complete+=kspell
 
-" Config for the first-generation Idris 2 support plugin
-let g:idris_indent_if = 2
-let g:idris_indent_case = 2
-let g:idris_indent_rewrite = 0
-
 " Center the cursor like to be in the center of the screen
 au VimEnter * normal zz
 
