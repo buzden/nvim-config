@@ -45,31 +45,36 @@ function M.hide()
   M.res_buff:hide()
 end
 
-function M.check()
-  local fn = vim.fn.shellescape(vim.api.nvim_buf_get_name(0))
-  local tc = vim.fn.system(string.format("%s --color=always compile --format=pdf %s /dev/null", vim.g.typst_cmd, fn))
+function M.check(clearBeforeEcho)
+  local flines = vim.fn.join(vim.fn.getline(1, '$'), '\n')
+  if clearBeforeEcho then
+    vim.cmd [[ call feedkeys(':', 'nx') " For clearing previous messages ]]
+  end
+  vim.cmd [[ echo "Checking typst..." ]]
+  local tc = vim.fn.system(string.format("%s --color=always compile --format=pdf - /dev/null", vim.g.typst_cmd), flines)
+  if clearBeforeEcho then
+    vim.cmd [[ call feedkeys(':', 'nx') " For clearing previous messages ]]
+  end
 
   M.res_buff:hide()
   if tc == "" then
     vim.cmd [[
-      call feedkeys(':', 'nx') " For clearing previous messages
       echohl DiagnosticOk
-      echo "Successfully compiled PDF"
+      echo "Successfully checked typst"
       echohl None
     ]]
   else
     local winnr = vim.api.nvim_get_current_win()
 
-    local lines = vim.split(tc, '\n')
-    lines = vim.lsp.util.trim_empty_lines(lines)
-    table.insert(lines, 1, '')
-    table.insert(lines, '')
+    local tclines = vim.split(tc, '\n')
+    tclines = vim.lsp.util.trim_empty_lines(tclines)
+    table.insert(tclines, 1, '')
+    table.insert(tclines, '')
 
     M.res_buff:show()
     vim.api.nvim_buf_set_option(M.res_buff.bufnr, 'modifiable', true)
-    vim.api.nvim_buf_set_lines(M.res_buff.bufnr, 0, -1, false, lines)
-    --vim.api.nvim_win_set_height(M.res_buff.winid, #(lines))
-    vim.api.nvim_win_set_height(0, #(lines)) -- reading current since we did `show()` above
+    vim.api.nvim_buf_set_lines(M.res_buff.bufnr, 0, -1, false, tclines)
+    vim.api.nvim_win_set_height(0, #(tclines)) -- reading current since we did `show()` above
     vim.api.nvim_buf_set_option(M.res_buff.bufnr, 'modifiable', false)
     if not M.already_escaped then
       vim.cmd [[ AnsiEsc ]]

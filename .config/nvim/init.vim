@@ -109,10 +109,11 @@ nnoremap <silent> <C-p> :TypstPreview slide<CR>
 nnoremap <silent> <C-A-p> :TypstPreview document<CR>
 nnoremap <silent> <C-S-p> :TypstPreviewStop<CR>
 
-" Make on save
+" Make on open and edit
 lua require('typst-buf').setup()
 normal zz
-autocmd BufReadPost,BufWritePost *.typ lua require('typst-buf').check()
+"autocmd BufReadPost,BufWritePost *.typ lua require('typst-buf').check(true)
+autocmd CursorHoldI,CursorHold   *.typ lua require('typst-buf').check(false)
 autocmd BufCreate *.typ nnoremap <silent> <CR> <Cmd>noh<CR><Cmd>lua require('typst-buf').hide()<CR>
 
 """"""""""""""""""""""""""""""""""""""""
