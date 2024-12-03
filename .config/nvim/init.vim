@@ -67,10 +67,9 @@ call plug#end()
 """
 """"""""""""""""""""""""
 
-" Airline statusbar
 set noshowmode " This is for when airline/lightline/powershell plugin is on
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = len(getbufinfo({'buflisted':1})) > 1 ? 1 : 0
+let g:airline#extensions#tabline#enabled = len(getbufinfo({'buflisted':1})) > 1
 
 """"""""""""""""""""""""""""""""""""
 """ Configuring clipboard behaviour
