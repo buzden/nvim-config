@@ -70,9 +70,7 @@ call plug#end()
 " Airline statusbar
 set noshowmode " This is for when airline/lightline/powershell plugin is on
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 0
-" big number in comparison below goes from additional buffers line from idris2-lsp, nerd and typst-buf
-autocmd BufEnter * silent! let g:airline#extensions#tabline#enabled = bufnr('$') >= 4 ? 1 : 0
+let g:airline#extensions#tabline#enabled = len(getbufinfo({'buflisted':1})) > 1 ? 1 : 0
 
 """"""""""""""""""""""""""""""""""""
 """ Configuring clipboard behaviour
