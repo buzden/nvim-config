@@ -46,42 +46,53 @@ function M.hide()
 end
 
 function M.check(clearBeforeEcho)
-  local flines = vim.fn.join(vim.fn.getline(1, '$'), '\n')
-  if clearBeforeEcho then
-    vim.cmd [[ call feedkeys(':', 'nx') " For clearing previous messages ]]
-  end
-  vim.cmd [[ echo "Checking typst..." ]]
-  local tc = vim.fn.system(string.format("%s --color=always compile --format=pdf - /dev/null", vim.g.typst_cmd), flines)
-  if clearBeforeEcho then
-    vim.cmd [[ call feedkeys(':', 'nx') " For clearing previous messages ]]
-  end
-
-  M.res_buff:hide()
-  if tc == "" then
-    vim.cmd [[
-      echohl DiagnosticOk
-      echo "Successfully checked typst"
-      echohl None
-    ]]
-  else
-    local winnr = vim.api.nvim_get_current_win()
-
-    local tclines = vim.split(tc, '\n')
-    tclines = vim.lsp.util.trim_empty_lines(tclines)
-    table.insert(tclines, 1, '')
-    table.insert(tclines, '')
-
-    M.res_buff:show()
-    vim.api.nvim_buf_set_option(M.res_buff.bufnr, 'modifiable', true)
-    vim.api.nvim_buf_set_lines(M.res_buff.bufnr, 0, -1, false, tclines)
-    vim.api.nvim_win_set_height(0, #(tclines)) -- reading current since we did `show()` above
-    vim.api.nvim_buf_set_option(M.res_buff.bufnr, 'modifiable', false)
-    if not M.already_escaped then
-      vim.cmd [[ AnsiEsc ]]
-      M.already_escaped = true
+  function stderr_callback(chan, tclines, n)
+    local tclines = vim.lsp.util.trim_empty_lines(tclines)
+    if clearBeforeEcho then
+      vim.cmd [[ call feedkeys(':', 'nx') " For clearing previous messages ]]
     end
 
-    vim.api.nvim_set_current_win(winnr)
+    M.res_buff:hide()
+    if #(tclines) <= 1 then
+      vim.cmd [[
+        echohl DiagnosticOk
+        echo "Successfully checked typst"
+        echohl None
+      ]]
+    else
+      local winnr = vim.api.nvim_get_current_win()
+
+      table.insert(tclines, 1, '')
+      table.insert(tclines, '')
+
+      M.res_buff:show()
+      vim.api.nvim_buf_set_option(M.res_buff.bufnr, 'modifiable', true)
+      vim.api.nvim_buf_set_lines(M.res_buff.bufnr, 0, -1, false, tclines)
+      vim.api.nvim_win_set_height(0, #(tclines)) -- reading current since we did `show()` above
+      vim.api.nvim_buf_set_option(M.res_buff.bufnr, 'modifiable', false)
+      if not M.already_escaped then
+        vim.cmd [[ AnsiEsc ]]
+        M.already_escaped = true
+      end
+
+      vim.api.nvim_set_current_win(winnr)
+    end
+  end
+
+  local job = vim.fn.jobstart(
+    string.format("%s --color=always compile --format=pdf - /dev/null", vim.g.typst_cmd),
+    { detach = false, rpc = false, stderr_buffered = true, on_stderr = stderr_callback, stdin = "pipe" }
+  )
+  if clearBeforeEcho then
+    vim.cmd [[ call feedkeys(':', 'nx') " For clearing previous messages ]]
+  end
+  if job == 0 or job == -1 then
+    vim.cmd [[ echo "Couldn't start typst" ]]
+  else
+    vim.cmd [[ echo "Checking typst..." ]]
+
+    vim.fn.chansend(job, vim.fn.getline(1, '$'))
+    vim.fn.chanclose(job, "stdin")
   end
 end
 
