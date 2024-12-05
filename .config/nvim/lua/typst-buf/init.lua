@@ -46,6 +46,10 @@ function M.hide()
 end
 
 function M.check(clearBeforeEcho)
+  if not vim.fn.getbufinfo('%')[1].changed then
+    return
+  end
+
   function stderr_callback(chan, tclines, n)
     local tclines = vim.lsp.util.trim_empty_lines(tclines)
     if clearBeforeEcho then
