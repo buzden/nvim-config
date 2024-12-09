@@ -61,6 +61,9 @@ call plug#begin()
   " Support for showing text with ANSI escape codes
   Plug 'powerman/vim-plugin-AnsiEsc'
 
+  " Sophisticated undo tree
+  Plug 'mbbill/undotree'
+
 call plug#end()
 
 """"""""""""""""""""""""
@@ -95,6 +98,22 @@ imap <C-v> <ESC>"+pa
 xmap ga <Plug>(EasyAlign)
 " start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+""""""""""""""""""""""""""
+""" Configuring undo tree
+"""
+""""""""""""""""""""""""""
+
+nnoremap <silent> <C-u> <CMD>UndotreeToggle<CR>
+nnoremap <silent> <C-S-u> <CMD>UndotreePersistUndo<CR><CMD>echo 'Persist undo enabled for this file'<CR>
+let g:undotree_WindowLayout = 2 " Diff in the bottom
+let g:undotree_SetFocusWhenToggle = 1
+"let g:undotree_DiffCommand = "delta --diff-highlight" " We need to run `:AnsiEsc` in the diff panel somehow to make this work
+"let g:undotree_DiffCommand = "git diff --no-index --no-color -U0" " Prints too much in the befinning
+
+hi DiffAdd    ctermbg=22
+hi DiffChange ctermbg=17
+hi DiffDelete ctermbg=52
 
 """""""""""""""""""""""
 """ Configuring Idris2
