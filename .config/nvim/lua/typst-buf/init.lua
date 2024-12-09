@@ -65,6 +65,7 @@ function M.check(clearBeforeEcho)
       ]]
     else
       local winnr = vim.api.nvim_get_current_win()
+      local winheight = vim.fn.winheight(0)
 
       table.insert(tclines, 1, '')
       table.insert(tclines, '')
@@ -72,7 +73,7 @@ function M.check(clearBeforeEcho)
       M.res_buff:show()
       vim.api.nvim_buf_set_option(M.res_buff.bufnr, 'modifiable', true)
       vim.api.nvim_buf_set_lines(M.res_buff.bufnr, 0, -1, false, tclines)
-      vim.api.nvim_win_set_height(0, #(tclines)) -- reading current since we did `show()` above
+      vim.api.nvim_win_set_height(0, math.min(#(tclines), math.floor(winheight / 2))) -- reading current since we did `show()` above
       vim.api.nvim_buf_set_option(M.res_buff.bufnr, 'modifiable', false)
       if not M.already_escaped then
         vim.cmd [[ AnsiEsc ]]
