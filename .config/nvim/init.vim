@@ -64,6 +64,10 @@ call plug#begin()
   " Sophisticated undo tree
   Plug 'mbbill/undotree'
 
+  " A scrollbar
+  Plug 'petertriho/nvim-scrollbar'
+  Plug 'kevinhwang91/nvim-hlslens'
+
 call plug#end()
 
 """"""""""""""""""""""""
@@ -204,5 +208,49 @@ function! ShowColumnIfLineIsTooLong()
     endif
   endif
 endfunction
+
+"""""""""""""""""""""
+""" Enable scrollbar
+"""
+"""""""""""""""""""""
+
+lua << EOF
+require('scrollbar').setup {
+  handle = {
+    color_nr = 235,
+  },
+  marks = {
+    Cursor = {
+      color_nr = 249,
+      priority = 10,
+    },
+    Search = {
+      color_nr = 11,
+      priority = 3,
+    },
+    Error = {
+      color_nr = 9,
+      priority = 0,
+    },
+    Warn = {
+      color_nr = 3,
+      priority = 1,
+    },
+    Info = {
+      color_nr = 19,
+    },
+    Hint = {
+      color_nr = 7,
+    },
+    Misc = {
+      color_nr = 7,
+    },
+  },
+}
+
+require("scrollbar.handlers.search").setup({
+    override_lens = function() end,
+})
+EOF
 
 " vim: textwidth=152
