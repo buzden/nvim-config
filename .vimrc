@@ -19,6 +19,7 @@ hi! link Folded Comment
 
 "hi Normal ctermbg=233
 
+hi Visual NONE | hi Visual ctermbg=240
 hi Todo ctermfg=0 ctermbg=130
 hi Statement ctermfg=3
 
@@ -40,10 +41,15 @@ match ExtraWhitespace /\s\+\%#\@<!$/
 " Remove trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
-" Colours of popup menus
-highlight Pmenu    ctermfg=254 ctermbg=17
-highlight PmenuSel ctermfg=254 ctermbg=4 cterm=bold
+" Colours of floating messages
+highlight NormalFloat    ctermfg=254 ctermbg=17
 highlight DiagnosticError ctermfg=magenta cterm=bold
+"highlight DiagnosticError ctermbg=0 cterm=bold
+
+" Menus
+highlight Pmenu    ctermbg=17  ctermfg=254
+highlight PmenuSel ctermbg=239 ctermfg=254 cterm=bold
+"highlight PmenuSel ctermfg=17 ctermbg=254 cterm=bold
 
 " Tabs keys
 nnoremap <silent> <A-C-Right> :bnext<CR>

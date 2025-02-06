@@ -6,6 +6,11 @@
 set runtimepath^=~/.vim runtimepath+=~/.vim/after runtimepath+=/usr/share/vim/vimfiles
 let &packpath = &runtimepath
 
+" Old (pre v0.10) colorscheme
+colorscheme vim
+set notermguicolors
+
+" Common config (must go after colorscheme setting)
 source ~/.vimrc
 
 " For compat between 0.9.* and 0.10.*. This can be removed as soon as we use NeoVim 0.10.*
@@ -115,9 +120,9 @@ let g:undotree_SetFocusWhenToggle = 1
 "let g:undotree_DiffCommand = "delta --diff-highlight" " We need to run `:AnsiEsc` in the diff panel somehow to make this work
 "let g:undotree_DiffCommand = "git diff --no-index --no-color -U0" " Prints too much in the befinning
 
-hi DiffAdd    ctermbg=22
-hi DiffChange ctermbg=17
-hi DiffDelete ctermbg=52
+highlight DiffAdd    ctermbg=22
+highlight DiffChange ctermbg=17
+highlight DiffDelete ctermbg=52
 
 """""""""""""""""""""""
 """ Configuring Idris2
@@ -231,26 +236,32 @@ require('scrollbar').setup {
     Error = {
       color_nr = 9,
       priority = 0,
+      text = { "|", "∥" },
     },
     Warn = {
       color_nr = 3,
       priority = 1,
+      text = { "|", "∥" },
     },
     Info = {
       color_nr = 19,
+      text = { "|", "∥" },
     },
     Hint = {
       color_nr = 7,
+      text = { "|", "∥" },
     },
     Misc = {
       color_nr = 7,
+      text = { "|", "∥" },
     },
   },
 }
 
 require("scrollbar.handlers.search").setup({
-    override_lens = function() end,
+  override_lens = function() end,
 })
+
 EOF
 
 " vim: textwidth=152
