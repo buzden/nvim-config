@@ -14,6 +14,7 @@
 !/.local/share
 /.local/share/*
 !/.local/share/nvim
+/.local/share/nvim/plugged/*
 
 # Unwanted vim files
 .vim/plugged
