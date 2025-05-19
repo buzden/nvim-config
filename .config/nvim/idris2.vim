@@ -15,8 +15,8 @@ local function custom_on_attach(client)
     nnoremap <silent> <LocalLeader>y <Cmd>lua require('idris2.hover').close_split(); vim.lsp.buf.hover()<CR>
     nnoremap <silent> <LocalLeader>h <Cmd>lua vim.lsp.buf.signature_help()<CR>
 
-    nnoremap <silent> <LocalLeader>i <Cmd>echo "Show imlicits: on"<CR><Cmd>lua require('idris2').show_implicits()<CR>
-    nnoremap <silent> <LocalLeader>I <Cmd>echo "Show imlicits: off"<CR><Cmd>lua require('idris2').hide_implicits()<CR>
+    nnoremap <silent> <LocalLeader>i <Cmd>echo "Show implicits: on"<CR><Cmd>lua require('idris2').show_implicits()<CR>
+    nnoremap <silent> <LocalLeader>I <Cmd>echo "Show implicits: off"<CR><Cmd>lua require('idris2').hide_implicits()<CR>
     nnoremap <silent> <LocalLeader>n <Cmd>echo "Namespaces: show full"<CR><Cmd>lua require('idris2').full_namespace()<CR>
     nnoremap <silent> <LocalLeader>N <Cmd>echo "Namespaces: hide"<CR><Cmd>lua require('idris2').hide_namespace()<CR>
 
@@ -44,7 +44,7 @@ local function custom_on_attach(client)
 end
 
 local function save_hook(action)
-  vim.cmd [[ silent write ]]
+  vim.cmd('silent write')
 end
 
 local opts = {

@@ -80,6 +80,7 @@ call plug#end()
 """
 """"""""""""""""""""""""
 
+highlight StatusLine NONE
 set noshowmode " This is for when airline/lightline/powershell plugin is on
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = len(getbufinfo({'buflisted':1})) > 1
@@ -263,5 +264,8 @@ require("scrollbar.handlers.search").setup({
 })
 
 EOF
+
+" Fixup for not-updating `airline` status after the `scrollbar` plugin was added
+lua vim.uv.new_timer():start(2000, 1500, function() vim.schedule(function() vim.cmd('AirlineRefresh'); end); end)
 
 " vim: textwidth=152
