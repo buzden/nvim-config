@@ -32,7 +32,7 @@ nnoremap <silent> <C-w> :call WantPasteFrom()<CR>
 
 " Set auto change dir
 set autochdir
-autocmd BufEnter * silent! lcd %:p:h
+autocmd BufEnter * silent! tcd %:p:h
 
 " Highlight any trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red

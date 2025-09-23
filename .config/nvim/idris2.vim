@@ -37,8 +37,10 @@ local function custom_on_attach(client)
     nnoremap <silent> <LocalLeader>x <Cmd>lua vim.diagnostic.goto_next()<CR>
     nnoremap <silent> <LocalLeader>z <Cmd>lua vim.diagnostic.goto_prev()<CR>
 
-    nnoremap <silent> <C-o> <C-o><Cmd>echo "Restarting LSP..."<CR><Cmd>cd %:p:h<CR><Cmd>LspRestart<CR>
-    nnoremap <silent> <C-i> <C-i><Cmd>echo "Restarting LSP..."<CR><Cmd>cd %:p:h<CR><Cmd>LspRestart<CR>
+    nnoremap <silent> <C-o> <C-o><Cmd>echo "Restarting LSP after back jump..."   <CR><Cmd>tcd %:p:h<CR><Cmd>LspRestart<CR>
+    nnoremap <silent> <C-i> <C-i><Cmd>echo "Restarting LSP after forward jump..."<CR><Cmd>tcd %:p:h<CR><Cmd>LspRestart<CR>
+
+    echo "LSP attached"
   ]]
 
 end
@@ -92,9 +94,12 @@ function! IWrite(str, colour)
 endfunction
 
 function! IdrisReload()
-  w
+  echo "Reloading Idris file..."
   let file = expand('%:p')
+  tcd %:p:h
+  if getbufinfo('%')[0].changed | w | endif
   let tc = system("idris2 --no-colour --find-ipkg " . shellescape(file) . " --client ''")
+  tcd -
   if (! (tc is ""))
     call IWrite(tc, "DiagnosticWarn")
   else
@@ -105,7 +110,11 @@ endfunction
 
 function! s:IdrisCommand(...)
   let idriscmd = shellescape(join(a:000))
-  return system("idris2 --no-color --find-ipkg " . shellescape(expand('%:p')) . " --client " . idriscmd)
+  tcd %:p:h
+  if getbufinfo('%')[0].changed | w | endif
+  let tc = system("idris2 --no-color --find-ipkg " . shellescape(expand('%:p')) . " --client " . idriscmd)
+  tcd -
+  return tc
 endfunction
 
 " Text near cursor position that needs to be passed to a command.
@@ -121,7 +130,6 @@ function! s:currentQueryObject()
 endfunction
 
 function! IdrisShowType()
-  w
   let word = s:currentQueryObject()
   let ty = s:IdrisCommand(":t", word)
   call IWrite(ty, "Comment")
@@ -129,7 +137,6 @@ endfunction
 
 function! IdrisTrivialProofSearch()
   let view = winsaveview()
-  w
   let cline = line(".")
   let word = s:currentQueryObject()
 
@@ -143,7 +150,6 @@ function! IdrisTrivialProofSearch()
 endfunction
 
 function! IdrisCaseSplit()
-  w
   let view = winsaveview()
   let cline = line(".")
   let ccol = col(".")
@@ -157,13 +163,13 @@ function! IdrisCaseSplit()
   endif
 endfunction
 
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>R <Cmd>cd %:p:h<CR><Cmd>echo "Restarting LSP..."<CR><CMD>LspRestart<CR>
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>r <Cmd>cd %:p:h<CR><Cmd>echo "Reloading Idris file..."<CR><CMD>call IdrisReload()<CR>
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>o <Cmd>cd %:p:h<CR><CMD>call IdrisTrivialProofSearch()<CR>
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>t <Cmd>cd %:p:h<CR><CMD>call IdrisShowType()<CR>
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>T <Cmd>cd %:p:h<CR><CMD>call IdrisShowType()<CR>
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>c <Cmd>cd %:p:h<CR><CMD>call IdrisCaseSplit()<CR>
-autocmd FileType idris2 :nnoremap <silent> <LocalLeader>C <Cmd>cd %:p:h<CR><CMD>call IdrisCaseSplit()<CR>
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>R <Cmd>echo "Restarting LSP..."<CR><CMD>LspRestart<CR>
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>r <CMD>call IdrisReload()<CR>
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>o <CMD>call IdrisTrivialProofSearch()<CR>
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>t <CMD>call IdrisShowType()<CR>
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>T <CMD>call IdrisShowType()<CR>
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>c <CMD>call IdrisCaseSplit()<CR>
+autocmd FileType idris2 :nnoremap <silent> <LocalLeader>C <CMD>call IdrisCaseSplit()<CR>
 
 let g:idris_indent_if = 2
 let g:idris_indent_case = 2
