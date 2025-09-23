@@ -29,13 +29,12 @@ call plug#begin()
   """
 
   """ Fourth generation
-  Plug 'neovim/nvim-lspconfig'
+  Plug 'neovim/nvim-lspconfig', { 'tag': 'v2.4.*' }
   Plug 'MunifTanjim/nui.nvim'
-  Plug 'ShinKage/idris2-nvim'
+  Plug 'idris-community/idris2-nvim'
 
   """ First generation (should go after the `idris2-nvim` because of issues of order)
-  "Plug 'edwinb/idris2-vim'
-  " Enabled now through system-wide installation of `idris2-vim`
+  Plug 'edwinb/idris2-vim'
 
   """ OTHER NICE STUFF
   """
@@ -152,6 +151,9 @@ lua require('typst-buf').setup()
 autocmd CursorHoldI,CursorHold *.typ lua require('typst-buf').check(false)
 autocmd BufCreate *.typ nnoremap <silent> <CR> <Cmd>noh<CR><Cmd>lua require('typst-buf').hide()<CR>
 
+lua vim.lsp.config("tinymist", { cmd = { "/home/buzden/.local/share/nvim/typst-preview/tinymist-linux-x64" } })
+lua vim.lsp.enable("tinymist")
+
 """"""""""""""""""""""""""""""""""""""""
 """ Rainbow (parentheses) configuration
 """
@@ -203,7 +205,7 @@ nnoremap <silent> <C-t> :NERDTreeToggle %<CR>
 " Idea taken from https://superuser.com/a/1289220, but raised to a newer level ;-)
 set colorcolumn=""
 highlight ColorColumn ctermbg=darkgrey
-autocmd ModeChanged,CursorHold,CursorHoldI * call ShowColumnIfLineIsTooLong()
+autocmd BufReadPost,ModeChanged,CursorHold,CursorHoldI * call ShowColumnIfLineIsTooLong()
 function! ShowColumnIfLineIsTooLong()
   if &textwidth > 0
     let maxLineLength = max(map(getline(1,'$'), 'strchars(v:val)'))
@@ -237,7 +239,7 @@ require('scrollbar').setup {
     Error = {
       color_nr = 9,
       priority = 0,
-      text = { "|", "∥" },
+      text = { "|", "∥", "⦀", "❚" },
     },
     Warn = {
       color_nr = 3,

@@ -11,8 +11,8 @@ local function custom_on_attach(client)
     nnoremap <silent> <LocalLeader>j <Cmd>echo "Jumping to the definition..."<CR><Cmd>lua vim.lsp.buf.definition()<CR>
 
     nnoremap <silent> <CR>           <Cmd>noh<CR><Cmd>lua require('idris2.hover').close_split()<CR>
-    nnoremap <silent> <LocalLeader>t <Cmd>lua require('idris2.hover').open_split(); vim.lsp.buf.hover()<CR>
-    nnoremap <silent> <LocalLeader>y <Cmd>lua require('idris2.hover').close_split(); vim.lsp.buf.hover()<CR>
+    nnoremap <silent> <LocalLeader>t <Cmd>lua require('idris2.hover').hover(true)<CR>
+    nnoremap <silent> <LocalLeader>y <Cmd>lua require('idris2.hover').hover(false)<CR>
     nnoremap <silent> <LocalLeader>h <Cmd>lua vim.lsp.buf.signature_help()<CR>
 
     nnoremap <silent> <LocalLeader>i <Cmd>echo "Show implicits: on"<CR><Cmd>lua require('idris2').show_implicits()<CR>
@@ -44,7 +44,7 @@ local function custom_on_attach(client)
 end
 
 local function save_hook(action)
-  vim.cmd('silent write')
+  vim.cmd [[ silent write ]]
 end
 
 local opts = {
@@ -55,6 +55,7 @@ local opts = {
       auto_resize_split = true,
       with_history = false,
       split_position = 'bottom',
+      use_as_popup = false,
     },
   },
 

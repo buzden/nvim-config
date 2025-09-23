@@ -78,9 +78,10 @@ let g:rst_syntax_code_list = {
   \ 'cpp': ['cpp', 'c++'],
   \ 'python': ['python']
   \ }
-let g:markdown_fenced_languages = ['scala=scala', 'haskell=haskell', 'idris=idris2', 'bash=sh', 'sh=sh', '{eval-rst}=rst', 'tex=tex', 'c=c']
+let g:markdown_fenced_languages = [
+  \ 'scala=scala', 'haskell=haskell', 'idris=idris2', 'bash=sh', 'sh=sh', '{eval-rst}=rst', 'tex=tex', 'c=c', 'json=json']
 " NOTICE! Addition `java=java` above ruins spellchecking everywhere but headings O_O
-let g:typst_embedded_languages = ['idris -> idris2', 'c', 'rust', 'rs -> rust', 'sh', 'haskell', 'hs -> haskell', 'scala']
+let g:typst_embedded_languages = ['idris -> idris2', 'c', 'rust', 'rs -> rust', 'sh', 'haskell', 'hs -> haskell', 'scala', 'json']
 let g:typst_pdf_viewer = 'mupdf'
 
 " Spell checking
