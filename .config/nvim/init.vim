@@ -1,22 +1,101 @@
-"""""""""""""""""""""""""""""""""""""""""
-""" Taking common configuration with Vim
+"""""""""""""""""""""""""
+""" System configuration
 """
-"""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""
 
-set runtimepath^=~/.vim runtimepath+=~/.vim/after runtimepath+=/usr/share/vim/vimfiles
+" Take system files installed by external packages into account
+set runtimepath^=/usr/share/vim/vimfiles runtimepath+=/usr/share/vim/vimfiles/after
 let &packpath = &runtimepath
-
-" Old (pre v0.10) colorscheme
-colorscheme vim
-set notermguicolors
-
-" Common config (must go after colorscheme setting)
-source ~/.vimrc
 
 " For compat between 0.9.* and 0.10.*. This can be removed as soon as we use NeoVim 0.10.*
 lua vim.uv = vim.uv or vim.loop
 
+""""""""""""""""""""""""""
+""" General options setup
+"""
+""""""""""""""""""""""""""
+
+" Old (pre v0.10) colorscheme, must go as early in the config as possible
+colorscheme vim
+set notermguicolors
+
+" Set identation
+set ts=2
+set expandtab
+set autoindent
+
+" Sets X11 title
+set title
+
 set updatetime=1500 " To make `CursorHold` above work after 1.5 s of hold
+
+"""""""""""""""""""
+""" Common colours
+"""
+"""""""""""""""""""
+
+hi! link Folded Comment " Make folded section be colored like a comment.
+hi Visual NONE | hi Visual ctermbg=240
+hi Todo ctermfg=0 ctermbg=130
+hi Statement ctermfg=3
+
+" Colours of floating messages
+hi NormalFloat     ctermfg=254 ctermbg=17
+hi DiagnosticError ctermfg=magenta cterm=bold
+
+" Menus
+hi Pmenu    ctermbg=17  ctermfg=254
+hi PmenuSel ctermbg=239 ctermfg=254 cterm=bold
+
+""""""""""""""""""
+""" Startup state
+"""
+""""""""""""""""""
+
+" Set auto change dir
+set autochdir
+"autocmd BufEnter * silent! tcd %:p:h
+
+" Center the cursor like to be in the center of the screen
+au VimEnter * normal zz
+
+"""""""""""""""""""""
+""" Global nice keys
+"""
+"""""""""""""""""""""
+
+" Tabs keys
+nnoremap <silent> <C-Tab>   :bnext<CR>
+nnoremap <silent> <C-S-Tab> :bNext<CR>
+nnoremap <silent> <A-C-Right> :bnext<CR>
+nnoremap <silent> <A-C-Left>  :bNext<CR>
+
+" Shift page without shifting the cursor
+nnoremap <silent> <S-Up> <C-y>
+vnoremap <silent> <S-Up> <C-y>
+nnoremap <silent> <S-Down> <C-e>
+vnoremap <silent> <S-Down> <C-e>
+
+" This unsets the "last search pattern" register by hitting return
+nnoremap <silent> <CR> :noh<CR>
+
+" Disable `q` and `ZZ` in the main mode
+nnoremap <silent> q :<CR>
+nnoremap <silent> ZZ :<CR>
+
+"""""""""""""""""""""""""""""""""
+""" Spelling and internalisation
+"""
+"""""""""""""""""""""""""""""""""
+
+" Spell checking
+set spelllang=ru,en
+
+" Spell-check-based work competion, press Ctrl+N or Ctrl+P to see variants
+set complete+=kspell
+
+" Be able to use russian keys in a command mode
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz,Ж;:
 
 """""""""""""""""""""""
 """ Turning on plugins
@@ -60,7 +139,6 @@ call plug#begin()
   " Support for typst
   Plug 'kaarmu/typst.vim'
   Plug 'chomosuke/typst-preview.nvim', {'tag': 'v1.*'}
-  "Plug 'Myriad-Dreamin/tinymist', {'rtp': 'editors/neovim'}
 
   " Support for showing text with ANSI escape codes
   Plug 'powerman/vim-plugin-AnsiEsc'
@@ -98,31 +176,30 @@ vmap <C-x> "+c
 vmap <C-v> c<ESC>"+p
 imap <C-v> <ESC>"+pa
 
-""""""""""""""""""""""""""
-""" Configuring EasyAlign
+""""""""""""""""""""
+""" Lines numbering
 """
-""""""""""""""""""""""""""
+""""""""""""""""""""
 
-" start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+fun ToggleSignColumn()
+  if &signcolumn == "yes"
+    set signcolumn=no
+    set nonumber
+    set norelativenumber
+  else
+    set signcolumn=yes
+    set number " Prints the current line number
+    set relativenumber
+  endif
+endfun
 
-""""""""""""""""""""""""""
-""" Configuring undo tree
-"""
-""""""""""""""""""""""""""
+hi LineNr       ctermfg=239 ctermbg=233
+hi CursorLineNr ctermfg=245 ctermbg=233 cterm=bold
+hi SignColumn               ctermbg=233
+hi EndOfBuffer  ctermfg=12  ctermbg=233
 
-nnoremap <silent> <C-u> <CMD>UndotreeToggle<CR>
-nnoremap <silent> <C-S-u> <CMD>UndotreePersistUndo<CR><CMD>echo 'Persist undo enabled for this file'<CR>
-let g:undotree_WindowLayout = 2 " Diff in the bottom
-let g:undotree_SetFocusWhenToggle = 1
-"let g:undotree_DiffCommand = "delta --diff-highlight" " We need to run `:AnsiEsc` in the diff panel somehow to make this work
-"let g:undotree_DiffCommand = "git diff --no-index --no-color -U0" " Prints too much in the befinning
-
-highlight DiffAdd    ctermbg=22
-highlight DiffChange ctermbg=17
-highlight DiffDelete ctermbg=52
+call ToggleSignColumn()
+nnoremap <silent> <C-w> :call ToggleSignColumn()<CR>
 
 """""""""""""""""""""""
 """ Configuring Idris2
@@ -139,8 +216,11 @@ source $HOME/.config/nvim/idris2.vim
 """
 """"""""""""""""""""""
 
+let g:typst_embedded_languages = ['idris -> idris2', 'c', 'rust', 'rs -> rust', 'sh', 'haskell', 'hs -> haskell', 'scala', 'json']
+let g:typst_pdf_viewer = 'mupdf'
+
 " Preview
-lua require 'typst-preview'.setup { open_cmd = 'firefox-bin --new-instance %s -P typst-preview --kiosk' }
+lua require 'typst-preview'.setup { open_cmd = 'zen --new-instance %s -P typst-preview --kiosk' }
 nnoremap <silent> <C-p> :TypstPreview slide<CR>
 nnoremap <silent> <C-A-p> :TypstPreview document<CR>
 nnoremap <silent> <C-S-p> :TypstPreviewStop<CR>
@@ -148,11 +228,33 @@ nnoremap <silent> <C-S-p> :TypstPreviewStop<CR>
 " Make on open and edit
 lua require('typst-buf').setup()
 "autocmd BufReadPost,BufWritePost *.typ lua require('typst-buf').check(true)
-autocmd CursorHoldI,CursorHold *.typ lua require('typst-buf').check(false)
+autocmd CursorHoldI *.typ lua require('typst-buf').check(false)
 autocmd BufCreate *.typ nnoremap <silent> <CR> <Cmd>noh<CR><Cmd>lua require('typst-buf').hide()<CR>
 
-lua vim.lsp.config("tinymist", { cmd = { "/home/buzden/.local/share/nvim/typst-preview/tinymist-linux-x64" } })
+lua vim.lsp.config("tinymist", { cmd = { "$HOME/.local/share/nvim/typst-preview/tinymist-linux-x64" } })
 lua vim.lsp.enable("tinymist")
+
+"""""""""""""""""""""""""""""""""""""""
+""" Configuring other markup languages
+"""
+"""""""""""""""""""""""""""""""""""""""
+
+let g:tex_flavor = 'latex'
+let g:rst_syntax_code_list = {
+  \ 'scala': ['scala'],
+  \ 'haskell': ['haskell'],
+  \ 'idris2': ['idris', 'idris2'],
+  \ 'tex': ['tex', 'latex'],
+  \ 'java': ['java'],
+  \ 'xml': ['xml'],
+  \ 'html': ['html'],
+  \ 'sh': ['sh'],
+  \ 'cpp': ['cpp', 'c++'],
+  \ 'python': ['python']
+  \ }
+let g:markdown_fenced_languages = [
+  \ 'scala=scala', 'haskell=haskell', 'idris=idris2', 'bash=sh', 'sh=sh', '{eval-rst}=rst', 'tex=tex', 'c=c', 'json=json']
+" NOTICE! Addition `java=java` above ruins spellchecking everywhere but headings O_O
 
 """"""""""""""""""""""""""""""""""""""""
 """ Rainbow (parentheses) configuration
@@ -177,24 +279,17 @@ let g:rainbow_conf = {
 \	}
 \}
 
-""""""""""""""""""""""""""""
-""" Nerd tree configuration
+"""""""""""""""""""""""""""""""""
+""" Managing trailing whitespace
 """
-""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""
 
-" Exit Vim if NERDTree is the only window left.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-    \ quit | endif
+" Highlight any trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+\%#\@<!$/
 
-" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-
-" Close the tree when a file is open from it
-let NERDTreeQuitOnOpen=3
-
-" Ctrl-t toggles the Nerd tree (with root being a dir of current file)
-nnoremap <silent> <C-t> :NERDTreeToggle %<CR>
+" Remove trailing whitespace on save
+autocmd BufWritePre * :%s/\s\+$//e
 
 """""""""""""""""""""""""""""""""""
 """ Line for exceeding line length
@@ -205,7 +300,7 @@ nnoremap <silent> <C-t> :NERDTreeToggle %<CR>
 " Idea taken from https://superuser.com/a/1289220, but raised to a newer level ;-)
 set colorcolumn=""
 highlight ColorColumn ctermbg=darkgrey
-autocmd BufReadPost,ModeChanged,CursorHold,CursorHoldI * call ShowColumnIfLineIsTooLong()
+autocmd BufReadPost,ModeChanged,CursorHoldI * call ShowColumnIfLineIsTooLong()
 function! ShowColumnIfLineIsTooLong()
   if &textwidth > 0
     let maxLineLength = max(map(getline(1,'$'), 'strchars(v:val)'))
@@ -270,4 +365,50 @@ EOF
 " Fixup for not-updating `airline` status after the `scrollbar` plugin was added
 lua vim.uv.new_timer():start(2000, 1500, function() vim.schedule(function() vim.cmd('AirlineRefresh'); end); end)
 
+""""""""""""""""""""""""""
+""" Configuring EasyAlign
+"""
+""""""""""""""""""""""""""
+
+" start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+""""""""""""""""""""""""""
+""" Configuring undo tree
+"""
+""""""""""""""""""""""""""
+
+nnoremap <silent> <C-u> <CMD>UndotreeToggle<CR>
+nnoremap <silent> <C-S-u> <CMD>UndotreePersistUndo<CR><CMD>echo 'Persist undo enabled for this file'<CR>
+let g:undotree_WindowLayout = 2 " Diff in the bottom
+let g:undotree_SetFocusWhenToggle = 1
+"let g:undotree_DiffCommand = "delta --diff-highlight" " We need to run `:AnsiEsc` in the diff panel somehow to make this work
+"let g:undotree_DiffCommand = "git diff --no-index --no-color -U0" " Prints too much in the befinning
+
+highlight DiffAdd    ctermbg=22
+highlight DiffChange ctermbg=17
+highlight DiffDelete ctermbg=52
+
+""""""""""""""""""""""""""""
+""" Nerd tree configuration
+"""
+""""""""""""""""""""""""""""
+
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
+" Close the tree when a file is open from it
+let NERDTreeQuitOnOpen=3
+
+" Ctrl-t toggles the Nerd tree (with root being a dir of current file)
+nnoremap <silent> <C-t> :NERDTreeToggle %<CR>
+
+"""""""""""""""""""""
 " vim: textwidth=152
