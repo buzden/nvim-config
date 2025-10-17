@@ -27,7 +27,7 @@ set autoindent
 " Sets X11 title
 set title
 
-set updatetime=1500 " To make `CursorHold` above work after 1.5 s of hold
+set updatetime=1500 " To make `CursorHold*` work after 1.5 s of hold
 
 """""""""""""""""""
 """ Common colours
@@ -220,18 +220,18 @@ let g:typst_embedded_languages = ['idris -> idris2', 'c', 'rust', 'rs -> rust', 
 let g:typst_pdf_viewer = 'mupdf'
 
 " Preview
-lua require 'typst-preview'.setup { open_cmd = 'zen --new-instance %s -P typst-preview --kiosk' }
+lua require 'typst-preview'.setup { open_cmd = 'zen --new-instance -P typst-preview --kiosk %s 2>/dev/null' }
 nnoremap <silent> <C-p> :TypstPreview slide<CR>
 nnoremap <silent> <C-A-p> :TypstPreview document<CR>
 nnoremap <silent> <C-S-p> :TypstPreviewStop<CR>
 
 " Make on open and edit
 lua require('typst-buf').setup()
-"autocmd BufReadPost,BufWritePost *.typ lua require('typst-buf').check(true)
-autocmd CursorHoldI *.typ lua require('typst-buf').check(false)
+autocmd FileType typst ++once lua require('typst-buf').check(false)
+autocmd FileType typst autocmd TextChanged,ModeChanged,CursorHoldI * lua require('typst-buf').check(false)
 autocmd BufCreate *.typ nnoremap <silent> <CR> <Cmd>noh<CR><Cmd>lua require('typst-buf').hide()<CR>
 
-lua vim.lsp.config("tinymist", { cmd = { "$HOME/.local/share/nvim/typst-preview/tinymist-linux-x64" } })
+lua vim.lsp.config("tinymist", { cmd = { "/home/buzden/.local/share/nvim/typst-preview/tinymist-linux-x64" } })
 lua vim.lsp.enable("tinymist")
 
 """""""""""""""""""""""""""""""""""""""

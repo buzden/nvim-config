@@ -51,7 +51,9 @@ function M.check(clearBeforeEcho)
   end
 
   function stderr_callback(chan, tclines, n)
-    local tclines = vim.lsp.util.trim_empty_lines(tclines)
+    --local tclines = vim.lsp.util.trim_empty_lines(tclines)
+    while (tclines[1] == "") do table.remove(tclines, 1) end
+    while (tclines[#(tclines)] == "") do table.remove(tclines, #(tclines)) end
     if clearBeforeEcho then
       vim.cmd [[ call feedkeys(':', 'nx') " For clearing previous messages ]]
     end
