@@ -1,16 +1,22 @@
 # This file is used as a gitignore for the repo by using the `core.excludesFile` setting
 
-# Everything except listed
-/*
+# Ignore everything except listed
+*
+!.*/
+!.*/**/
+
+# Ignore dirs containing other git repos
+.cache
+.local/share/nvim/plugged/
+
+# Ignore compiled spell-checking files
+*.spl
 
 # Meta, gitignore for this repo
 !/.nvim-repo-gitignore
 
 # Neovim config
-!/.config/nvim/
+!/.config/nvim/**
 
 # Globally needed things
-!/.local/share/nvim/site
-
-# Except compiled spell-checking files
-*.spl
+!/.local/share/nvim/site/**
