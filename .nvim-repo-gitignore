@@ -6,11 +6,8 @@
 !.*/**/
 
 # Ignore dirs containing other git repos
-.cache
+.cache/
 .local/share/nvim/plugged/
-
-# Ignore compiled spell-checking files
-*.spl
 
 # Meta, gitignore for this repo
 !/.nvim-repo-gitignore
@@ -20,3 +17,7 @@
 
 # Globally needed things
 !/.local/share/nvim/site/**
+
+# Ignore compiled spell-checking files (must go in the end)
+*.spl
+*.sug
