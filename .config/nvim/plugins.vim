@@ -192,7 +192,16 @@ require("scrollbar.handlers.search").setup({
 EOF
 
 " Fixup for not-updating `airline` status after the `scrollbar` plugin was added
-"lua vim.uv.new_timer():start(2000, 1500, function() vim.schedule(function() vim.cmd('AirlineRefresh'); end); end)
+lua << EOF
+local the_notify = vim.notify
+vim.notify = function(msg, level, opts)
+  the_notify(msg, level, opts)
+  if string.find(msg, "semantically highlighted") then
+    vim.cmd('AirlineRefresh')
+    vim.cmd('noh')
+  end
+end
+EOF
 
 """"""""""""""""""""""""""
 """ Configuring EasyAlign
