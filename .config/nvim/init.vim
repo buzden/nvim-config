@@ -79,6 +79,10 @@ vnoremap <silent> <S-Down> <C-e>
 " This unsets the "last search pattern" register by hitting return
 nnoremap <silent> <CR> :noh<CR>
 
+" Smart Home-button behaviour
+noremap <expr><silent> <Home> col('.') == 1 ? "^" : "0"
+inoremap <silent> <Home> <C-O>:execute "normal" (col('.') == 1 ? "^" : "0")<CR>
+
 " Disable `q` and `ZZ` in the main mode
 nnoremap <silent> q :<CR>
 nnoremap <silent> ZZ :<CR>
