@@ -98,7 +98,7 @@ set spelllang=ru,en
 " Spell-check-based work competion, press Ctrl+N or Ctrl+P to see variants
 set complete+=kspell
 
-" Be able to use russian keys in a command mode
+" Be able to use cyrillic keys in a command mode
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz,Ж;:
 
 """"""""""""""""""""""""""""""""""""
@@ -112,7 +112,7 @@ set clipboard=unnamed
 " Set "usual" combinations to the main clipboard (i.e., unnamedplus)
 vmap <C-c> "+yi
 vmap <C-x> "+c
-vmap <C-v> c<ESC>"+p
+"vmap <C-v> c<ESC>"+p
 imap <C-v> <ESC>"+pa
 
 """"""""""""""""""""

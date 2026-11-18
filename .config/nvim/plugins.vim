@@ -78,7 +78,7 @@ source $HOME/.config/nvim/idris2.vim
 """
 """"""""""""""""""""""
 
-let g:typst_embedded_languages = ['idris -> idris2', 'c', 'rust', 'rs -> rust', 'sh', 'haskell', 'hs -> haskell', 'scala', 'json']
+let g:typst_embedded_languages = ['idris -> idris2', 'c', 'rust', 'rs -> rust', 'sh', 'haskell', 'hs -> haskell', 'scala', 'json', 'python']
 let g:typst_pdf_viewer = 'mupdf'
 
 " Preview
@@ -115,7 +115,7 @@ let g:rst_syntax_code_list = {
   \ 'python': ['python']
   \ }
 let g:markdown_fenced_languages = [
-  \ 'scala=scala', 'haskell=haskell', 'idris=idris2', 'bash=sh', 'sh=sh', '{eval-rst}=rst', 'tex=tex', 'c=c', 'json=json']
+  \ 'scala=scala', 'haskell=haskell', 'idris=idris2', 'bash=sh', 'sh=sh', '{eval-rst}=rst', 'tex=tex', 'c=c', 'cpp=cpp', 'json=json', 'python=python']
 " NOTICE! Addition `java=java` above ruins spellchecking everywhere but headings O_O
 
 """"""""""""""""""""""""""""""""""""""""
