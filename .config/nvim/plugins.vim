@@ -83,9 +83,9 @@ let g:typst_pdf_viewer = 'mupdf'
 
 " Preview
 lua require 'typst-preview'.setup { open_cmd = 'zen --new-instance -P typst-preview --kiosk %s 2>/dev/null' }
-nnoremap <silent> <C-p> :TypstPreview slide<CR>
-nnoremap <silent> <C-A-p> :TypstPreview document<CR>
-nnoremap <silent> <C-S-p> :TypstPreviewStop<CR>
+autocmd FileType typst nnoremap <silent> <C-p>   :TypstPreview slide<CR>
+autocmd FileType typst nnoremap <silent> <C-A-p> :TypstPreview document<CR>
+autocmd FileType typst nnoremap <silent> <C-S-p> :TypstPreviewStop<CR>
 
 " Make on open and edit
 lua require('typst-buf').setup()
@@ -93,8 +93,8 @@ autocmd FileType typst ++once lua require('typst-buf').check(false)
 autocmd FileType typst autocmd TextChanged,ModeChanged,CursorHoldI * lua require('typst-buf').check(false)
 autocmd BufCreate *.typ nnoremap <silent> <CR> <Cmd>noh<CR><Cmd>lua require('typst-buf').hide()<CR>
 
-lua vim.lsp.config("tinymist", { cmd = { vim.fn.fnamemodify("~/.local/share/nvim/typst-preview/tinymist-linux-x64", ":p") } })
-lua vim.lsp.enable("tinymist")
+autocmd FileType typst lua vim.lsp.config("tinymist", { cmd = { vim.fn.fnamemodify("~/.local/share/nvim/typst-preview/tinymist-linux-x64", ":p") } })
+autocmd FileType typst lua vim.lsp.enable("tinymist")
 
 """""""""""""""""""""""""""""""""""""""
 """ Configuring other markup languages
